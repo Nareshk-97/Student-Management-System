@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %} Home {% endblock %} {% block content %}
+
+<h1>Student Management System</h1>
+
+<hr />
+
+{% if user.is_authenticated %}
+
+<p>Welcome, {{ user.get_full_name|default:user.username }}</p>
+
+<a href="{% url 'login_success' %}">Go to Dashboard</a>
+
+<br /><br />
+
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+{% else %}
+
+<p>Please choose an option.</p>
+
+<a href="{% url 'login' %}">Login</a>
+
+{% endif %} {% endblock %}

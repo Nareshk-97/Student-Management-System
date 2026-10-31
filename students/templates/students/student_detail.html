@@ -1,0 +1,42 @@
+{% extends "base.html" %} {% block title %}Student Details{% endblock %} {% block content %}
+
+<h1>Student Details</h1>
+
+{% if student.profile_picture %}
+<img src="{{ student.profile_picture.url }}" alt="Profile Picture" width="150" />
+<br /><br />
+{% endif %}
+
+<p><strong>Name:</strong> {{ student.account.get_full_name }}</p>
+
+<p><strong>Username:</strong> {{ student.account.username }}</p>
+
+<p><strong>Email:</strong> {{ student.account.email }}</p>
+
+<p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+
+<p><strong>Phone:</strong> {{ student.phone }}</p>
+
+<p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+
+<p><strong>Address:</strong> {{ student.address }}</p>
+
+<hr />
+
+{% if request.user.is_staff %}
+<a href="{% url 'student_update' student.pk %}">Update</a>
+
+|
+
+<a href="{% url 'student_delete' student.pk %}">Delete</a>
+
+|
+
+<a href="{% url 'student_list' %}">Back</a>
+
+{% elif request.user.role == "MENTOR" %}
+<a href="{% url 'mentor_dashboard' %}">Back</a>
+
+{% else %}
+<a href="{% url 'student_dashboard' %}">Back</a>
+{% endif %} {% endblock %}

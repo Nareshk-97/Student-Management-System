@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block title %}Mentor Dashboard{% endblock %} {% block content %}
+
+<h1>Mentor Dashboard</h1>
+
+<h3>My Details</h3>
+
+<p><strong>Name:</strong> {{ mentor.account.get_full_name }}</p>
+<p><strong>Username:</strong> {{ mentor.account.username }}</p>
+<p><strong>Email:</strong> {{ mentor.account.email }}</p>
+<p><strong>Department:</strong> {{ mentor.department }}</p>
+<p><strong>Qualification:</strong> {{ mentor.qualification }}</p>
+<p><strong>Experience:</strong> {{ mentor.experience }}</p>
+<p><strong>Phone:</strong> {{ mentor.phone }}</p>
+
+<hr />
+
+<h2>Students</h2>
+
+<form method="get">
+  <input type="text" name="search" placeholder="Search Students..." value="{{ search }}" />
+  <button type="submit">Search</button>
+</form>
+
+<br />
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Roll Number</th>
+    <th>Name</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Action</th>
+  </tr>
+
+  {% for student in page_obj %}
+  <tr>
+    <td>{{ student.roll_number }}</td>
+    <td>{{ student.account.get_full_name }}</td>
+    <td>{{ student.account.username }}</td>
+    <td>{{ student.account.email }}</td>
+    <td>{{ student.phone }}</td>
+    <td>
+      <a href="{% url 'student_detail' student.pk %}">View</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="6">No Students Found</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br />
+
+{% if page_obj.has_previous %}
+<a href="?page=1&search={{ search }}">First</a>
+<a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">Previous</a>
+{% endif %} Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} {% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}&search={{ search }}">Next</a>
+<a href="?page={{ page_obj.paginator.num_pages }}&search={{ search }}">Last</a>
+{% endif %}
+
+<br /><br />
+
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %} Student Dashboard {% endblock %} {% block content %}
+
+<h1>Student Dashboard</h1>
+
+<hr />
+
+{% if student.profile_picture %}
+<img src="{{ student.profile_picture.url }}" width="150" alt="Profile Picture" />
+{% endif %}
+
+<p><strong>Name:</strong> {{ student.account.get_full_name }}</p>
+<p><strong>Username:</strong> {{ student.account.username }}</p>
+<p><strong>Email:</strong> {{ student.account.email }}</p>
+<p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+<p><strong>Phone:</strong> {{ student.phone }}</p>
+<p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+<p><strong>Address:</strong> {{ student.address }}</p>
+
+<hr />
+
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+{% endblock %}

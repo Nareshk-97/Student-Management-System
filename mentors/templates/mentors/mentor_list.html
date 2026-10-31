@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% block title %}Mentor Management{% endblock %} {% block content %}
+
+<h1>Mentor Management</h1>
+
+<a href="{% url 'mentor_create' %}">Create Mentor</a>
+
+<br /><br />
+
+<form method="get">
+  <input type="text" name="search" placeholder="Search Mentors..." value="{{ search }}" />
+  <button type="submit">Search</button>
+</form>
+
+<br />
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Name</th>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Department</th>
+    <th>Qualification</th>
+    <th>Experience</th>
+    <th>Phone</th>
+    <th>Actions</th>
+  </tr>
+
+  {% for mentor in page_obj %}
+  <tr>
+    <td>{{ mentor.account.get_full_name }}</td>
+    <td>{{ mentor.account.username }}</td>
+    <td>{{ mentor.account.email }}</td>
+    <td>{{ mentor.department }}</td>
+    <td>{{ mentor.qualification }}</td>
+    <td>{{ mentor.experience }} Years</td>
+    <td>{{ mentor.phone }}</td>
+    <td>
+      <a href="{% url 'mentor_detail' mentor.pk %}">View</a> |
+      <a href="{% url 'mentor_update' mentor.pk %}">Update</a> |
+      <a href="{% url 'mentor_delete' mentor.pk %}">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="8">No Mentors Found</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<br />
+
+{% if page_obj.has_previous %}
+<a href="?page=1&search={{ search }}">First</a>
+<a href="?page={{ page_obj.previous_page_number }}&search={{ search }}">Previous</a>
+{% endif %} Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} {% if page_obj.has_next %}
+<a href="?page={{ page_obj.next_page_number }}&search={{ search }}">Next</a>
+<a href="?page={{ page_obj.paginator.num_pages }}&search={{ search }}">Last</a>
+{% endif %}
+
+<br /><br />
+
+<a href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+
+<form method="post" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %} {% block title %}Mentor Details{% endblock %} {% block content %}
+
+<h1>Mentor Details</h1>
+
+<hr />
+
+<p><strong>Name:</strong> {{ mentor.account.get_full_name }}</p>
+
+<p><strong>Username:</strong> {{ mentor.account.username }}</p>
+
+<p><strong>Email:</strong> {{ mentor.account.email }}</p>
+
+<p><strong>Department:</strong> {{ mentor.department }}</p>
+
+<p><strong>Qualification:</strong> {{ mentor.qualification }}</p>
+
+<p><strong>Experience:</strong> {{ mentor.experience }} Years</p>
+
+<p><strong>Phone:</strong> {{ mentor.phone }}</p>
+
+<hr />
+
+<a href="{% url 'mentor_update' mentor.pk %}">Update</a>
+
+|
+
+<a href="{% url 'mentor_delete' mentor.pk %}">Delete</a>
+
+|
+
+<a href="{% url 'mentor_list' %}">Back</a>
+
+{% endblock %}

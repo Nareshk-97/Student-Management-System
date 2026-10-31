@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% block title %} {{ title }} {% endblock %} {% block content %}
+
+<h1>{{ title }}</h1>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <fieldset>
+    <legend>Account Details</legend>
+    {{ account_form.as_p }}
+  </fieldset>
+
+  <fieldset>
+    <legend>Student Details</legend>
+    {{ student_form.as_p }}
+  </fieldset>
+
+  <button type="submit">Save</button>
+  <a href="{% url 'student_list' %}">Cancel</a>
+</form>
+
+{% endblock %}

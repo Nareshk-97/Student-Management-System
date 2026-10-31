@@ -1,0 +1,15 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+.env
+.vscode/
+
+# Django database and generated files
+db.sqlite3
+staticfiles/
+media/
+
+# Build dependencies
+node_modules/
+dist/
